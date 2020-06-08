@@ -22,9 +22,11 @@ def process_number():
     try:
         number = int(number)
 
-        # Если число существует в базе то проверяем меньше ли оно последнего обработанного числа на 1
+        # Проверяем меньше ли число уже обработанного числа на 1
         if db_handler.exist_in_db(number+1):
             raise NumberPlusOneExists
+
+        # Существует ли число в БД
         elif db_handler.exist_in_db(number):
             raise NumberExists
 
