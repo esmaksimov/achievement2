@@ -1,4 +1,4 @@
-version: "2"
+version: "2.1"
 services:
   app:
     build: .
@@ -9,10 +9,15 @@ services:
       - DBMS_PORT=3306
       - DBMS_USER=root
       - DBMS_PASS=123
-    depends_on: ["db"]
-    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
   db:
     image: mysql
     container_name: mysql
     environment: 
       - MYSQL_ROOT_PASSWORD=123
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
