@@ -1,0 +1,18 @@
+version: "2"
+services:
+  app:
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - DBMS_IP=mysql
+      - DBMS_PORT=3306
+      - DBMS_USER=root
+      - DBMS_PASS=123
+    depends_on: ["db"]
+    restart: on-failure
+  db:
+    image: mysql
+    container_name: mysql
+    environment: 
+      - MYSQL_ROOT_PASSWORD=123
